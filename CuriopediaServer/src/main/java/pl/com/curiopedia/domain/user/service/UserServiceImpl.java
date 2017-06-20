@@ -5,9 +5,13 @@ import org.springframework.security.authentication.AccountStatusUserDetailsCheck
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.com.curiopedia.domain.user.dto.UserParams;
+import pl.com.curiopedia.domain.user.entity.Authority;
 import pl.com.curiopedia.domain.user.entity.User;
+import pl.com.curiopedia.domain.user.repository.AuthorityRepository;
 import pl.com.curiopedia.domain.user.repository.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,11 +20,15 @@ import java.util.Optional;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+    private final AuthorityRepository authorityRepository;
     private final UserRepository userRepository;
     private final SecurityContextService securityContextService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, SecurityContextService securityContextService) {
+    public UserServiceImpl(AuthorityRepository authorityRepository,
+                           UserRepository userRepository,
+                           SecurityContextService securityContextService) {
+        this.authorityRepository = authorityRepository;
         this.userRepository = userRepository;
         this.securityContextService = securityContextService;
     }
@@ -31,5 +39,11 @@ public class UserServiceImpl implements UserService {
         final AccountStatusUserDetailsChecker detailsChecker = new AccountStatusUserDetailsChecker();
         user.ifPresent(detailsChecker::check);
         return user.orElseThrow(() -> new UsernameNotFoundException("user not found."));
+    }
+
+    @Override
+    public User create(UserParams params) {
+        List<Authority> authorities = authorityRepository.findAll();
+        return userRepository.save(params.toUser(authorities));
     }
 }

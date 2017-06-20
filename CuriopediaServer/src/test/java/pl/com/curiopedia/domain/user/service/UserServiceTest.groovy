@@ -3,7 +3,9 @@ package pl.com.curiopedia.domain.user.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import pl.com.curiopedia.domain.user.dto.UserParams
 import pl.com.curiopedia.domain.user.entity.User
+import pl.com.curiopedia.domain.user.repository.AuthorityRepository
 import pl.com.curiopedia.domain.user.repository.UserRepository
 
 /**
@@ -13,12 +15,15 @@ import pl.com.curiopedia.domain.user.repository.UserRepository
 class UserServiceTest extends BaseServiceTest {
 
     @Autowired
+    AuthorityRepository authorityRepository;
+
+    @Autowired
     UserRepository userRepository
 
     UserService userService
 
     def setup() {
-        userService = new UserServiceImpl(userRepository, securityContextService)
+        userService = new UserServiceImpl(authorityRepository, userRepository, securityContextService)
     }
 
     def "loadUserByUsername"() {
@@ -36,5 +41,19 @@ class UserServiceTest extends BaseServiceTest {
 
         then:
         thrown(UsernameNotFoundException)
+    }
+
+    def "can create a user"() {
+        given:
+        UserParams params = new UserParams("test1@test.com", "secret", "test1", "ROLE_USER")
+
+        when:
+        userService.create(params)
+        Optional<User> usrDb = userRepository.findOneByUsername("test1@test.com")
+
+        then:
+        userRepository.count() == 1
+        usrDb.isPresent()
+        usrDb.get().username == "test1@test.com"
     }
 }
