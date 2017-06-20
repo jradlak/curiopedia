@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import pl.com.curiopedia.auth.TokenHandler;
+import pl.com.curiopedia.domain.user.entity.Authority;
+import pl.com.curiopedia.domain.user.entity.User;
 import pl.com.curiopedia.domain.user.service.SecurityContextService;
 
 import java.io.Serializable;
@@ -43,7 +45,7 @@ public class AuthController {
 
         return securityContextService.currentUser().map(u -> {
             final String token = tokenHandler.createTokenForUser(u);
-            final String role = "ROLE_AUTHOR"; //TODO: FIX THIS
+            final String role = determineRole(u);
             return new AuthResponse(token, role);
         }).orElseThrow(RuntimeException::new);
     }
@@ -65,5 +67,30 @@ public class AuthController {
     private static final class AuthResponse implements Serializable {
         private String token;
         private String role;
+    }
+
+    private String determineRole(User user) {
+        if (!determineRole(user, Authority.ROLE_ADMIN).isEmpty()) {
+            return Authority.ROLE_ADMIN;
+        }
+
+        if (!determineRole(user, Authority.ROLE_AUTHOR).isEmpty()) {
+            return Authority.ROLE_AUTHOR;
+        }
+
+        if (!determineRole(user, Authority.ROLE_GUEST).isEmpty()) {
+            return Authority.ROLE_GUEST;
+        }
+
+        return Authority.ROLE_GUEST;
+    }
+
+    private String determineRole(User user, String role) {
+        if (user.getAuthorities().stream()
+                .filter(a -> role.equals(a.getAuthority())).count() > 0) {
+            return role;
+        }
+
+        return "";
     }
 }
