@@ -1,0 +1,30 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+  <button class="navbar-toggler navbar-toggler-right" type="button"
+          [mptStyles]="[styles.navbarToggler]" (click)="toggleMenu($event)">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" [routerLink]="['']">Simple CORE</a>
+  <div class="navbar-collapse" [hidden]="isMenuHidden">
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active" *ngIf="isSignedIn" >
+        <a class="nav-link" [routerLink]="['/users/me']">Home</a>
+      </li>      
+      
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/help']">Help</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" *ngIf="!isSignedIn">
+        <a class="nav-link" [routerLink]="['/login']">Sign in</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav my-2 my-lg-0">
+      <li class="nav-item">
+        <a class="nav-link logout" href="#"
+           (click)="logout(); $event.preventDefault()">Logout</a>
+      </li>
+    </ul>
+
+  </div>
+</nav>

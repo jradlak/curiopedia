@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.com.curiopedia.auth.StatelessAuthenticationFilter;
+import pl.com.curiopedia.domain.user.entity.Authority;
 
 /**
  * Created by jakub on 19.06.17.
@@ -49,8 +50,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         ;
 
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/users").hasAuthority("ROLE_AUTHOR")
-                .antMatchers(HttpMethod.GET, "/api/users/me").hasAuthority("ROLE_AUTHOR")
+                .antMatchers(HttpMethod.GET, "/api/users").hasAuthority(Authority.ROLE_AUTHOR)
+                .antMatchers(HttpMethod.GET, "/api/users/me").hasAuthority(Authority.ROLE_AUTHOR)
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new Http401AuthenticationEntryPoint("'Bearer token_type=\"JWT\"'"));
