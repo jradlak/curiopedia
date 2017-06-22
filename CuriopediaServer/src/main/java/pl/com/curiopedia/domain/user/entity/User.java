@@ -56,6 +56,10 @@ public class User implements UserDetails {
         return this.authorities;
     }
 
+    public Set<Authority> getAuths() {
+        return authorities;
+    }
+
     @Override
     public String getPassword() {
         return this.password;

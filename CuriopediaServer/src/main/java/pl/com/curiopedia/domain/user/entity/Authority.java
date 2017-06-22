@@ -41,4 +41,15 @@ public class Authority implements GrantedAuthority, Serializable {
         return this.name;
     }
 
+    public static Authority adminAuthority() {
+        return new Authority(ROLE_ADMIN);
+    }
+
+    public static Authority authorAuthority() {
+        return new Authority(ROLE_AUTHOR);
+    }
+
+    public static Authority guestAuthority() {
+        return new Authority(ROLE_GUEST);
+    }
 }

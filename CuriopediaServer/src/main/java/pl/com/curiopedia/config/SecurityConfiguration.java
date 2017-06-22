@@ -51,7 +51,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/users").hasAuthority(Authority.ROLE_AUTHOR)
-                .antMatchers(HttpMethod.GET, "/api/users/me").hasAuthority(Authority.ROLE_AUTHOR)
+                .antMatchers(HttpMethod.GET, "/api/users/me").hasAuthority(Authority.ROLE_GUEST)
+                .antMatchers(HttpMethod.PATCH, "/api/users/update").hasAuthority(Authority.ROLE_ADMIN)
+                .antMatchers(HttpMethod.PATCH, "/api/users/delete").hasAuthority(Authority.ROLE_ADMIN)
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new Http401AuthenticationEntryPoint("'Bearer token_type=\"JWT\"'"));
