@@ -11,7 +11,43 @@ import {UserService} from "../user.service";
 import {UserParams} from "../../dto";
 import {APP_TEST_HTTP_PROVIDERS} from "../../../../testing";
 
-//Uwaga! Jeśli pojawią się błędy przy korzystaniu z dummyListJson, wykonać: npm uninstall @types/jasmine; npm install @types/jasmine@2.5.45 
+//Uwaga jeśli pojawią się błędy przy korzystaniu z dummyListJson, wykonać: npm uninstall @types/jasmine; npm install @types/jasmine@2.5.45 
+
+const dummyListJson = [
+  {
+    id: 1,
+    content: 'content1',
+    createdAt: 0,
+    user: {
+      id: 1,
+      email: 'test1@test.com',
+      name: 'test user1'
+    },
+  },
+  {
+    id: 2, 
+    content: 'content2',
+    createdAt: 1234567,
+    user: {
+      id: 1,
+      email: 'test1@test.com',
+      name: 'test user1'
+    },
+  },
+];
+
+const dummyGetJson = {
+  user: {
+    id: 1,
+    email: 'test1@test.com',
+    name: 'test1',
+    userStats: {
+      micropostCnt: 1,
+      followingCnt: 2,
+      followerCnt: 3,
+    },
+  },
+};
 
 describe('UserService', () => {
 
@@ -33,6 +69,37 @@ describe('UserService', () => {
     [userService, backend] = _;
   }));
 
+  describe('.list', () => {
+    it("list users", (done) => {
+      backend.connections.subscribe(conn => {
+        conn.mockRespond(new Response(new ResponseOptions({
+          body: JSON.stringify(dummyListJson),
+        })));
+        expect(conn.request.method).toEqual(RequestMethod.Get);
+        expect(conn.request.url).toEqual('/api/users?page=1&size=5');
+      });
+      userService.list().subscribe(res => {
+        expect(res).toEqual(dummyListJson);
+        done();
+      });
+    });
+  }); // .list
+
+  describe('.get', () => {
+    it("get user", (done) => {
+      backend.connections.subscribe(conn => {
+        conn.mockRespond(new Response(new ResponseOptions({
+          body: JSON.stringify(dummyGetJson),
+        })));
+        expect(conn.request.method).toEqual(RequestMethod.Get);
+        expect(conn.request.url).toEqual('/api/users/1');
+      });
+      userService.get(1).subscribe(res => {
+        expect(res).toEqual(dummyGetJson);
+        done();
+      });
+    });
+  }); // .get
 
   describe('.create', () => {
     it("create user", (done) => {
@@ -52,5 +119,24 @@ describe('UserService', () => {
       });
     });
   }); // .create
+
+  describe('.updateMe', () => {
+    it("update me", (done) => {
+      const params: UserParams = {
+        email: 'test1@test.com',
+        password: 'secret',
+        name: 'test1',
+      };
+      backend.connections.subscribe(conn => {
+        conn.mockRespond(new Response(new BaseResponseOptions()));
+        expect(conn.request.method).toEqual(RequestMethod.Patch);
+        expect(conn.request.url).toEqual('/api/users/me');
+        expect(conn.request.json()).toEqual(params);
+      });
+      userService.updateMe(params).subscribe(() => {
+        done();
+      });
+    });
+  }); // .updateMe
 
 });

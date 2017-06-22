@@ -1,4 +1,4 @@
-
+import {Observable} from "rxjs";
 import {Component, DebugElement} from "@angular/core";
 import {Location} from "@angular/common";
 import {By} from "@angular/platform-browser/src/dom/debug/by";
@@ -15,6 +15,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {CoreModule} from "../../core";
 import {APP_TEST_HTTP_PROVIDERS, login, advance} from "../../../testing";
 import {AuthService} from "../../core/services/auth.service";
+import {UserService} from "../../core/services/user.service";
 import {SharedModule} from "../../components-shared/shared.module";
 
 describe('HeaderComponent', () => {
@@ -42,8 +43,10 @@ describe('HeaderComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([         
+          {path: 'users', component: BlankComponent},
           {path: 'help', component: BlankComponent},
           {path: 'users/:id', component: BlankComponent},
+          {path: 'users/me/edit', component: BlankComponent},
           {path: 'login', component: BlankComponent},
           {path: '', component: BlankComponent},
         ]),
@@ -91,6 +94,15 @@ describe('HeaderComponent', () => {
       expect(link).toBeNull();
     });
 
+    it('shows a nav link to users', fakeAsync(() => {
+      const link = getDOM().querySelector(el, 'a[href="/users"]');
+      expect(link).toBeTruthy();
+      link.click();
+      advance(fixture);
+      const activatedNav = getDOM().querySelector(el, '.nav-item.active > a[href="/users"]');
+      expect(activatedNav).toBeTruthy();
+    }));
+
     it('shows a nav link to help', fakeAsync(() => {
       const link = getDOM().querySelector(el, 'a[href="/help"]');
       expect(link).toBeTruthy();
@@ -100,7 +112,21 @@ describe('HeaderComponent', () => {
       expect(activatedNav).toBeTruthy();
     }));
 
-    
+    it('shows a nav link to profile', fakeAsync(() => {
+      const link = getDOM().querySelector(el, 'a[href="/users/me"]');
+      expect(link).toBeTruthy();
+    }));
+
+    describe('navigate to settings', () => {
+      beforeEach(inject([UserService], userService => {
+        spyOn(userService, 'get').and.returnValue(Observable.of({}));
+      }));
+      it('shows a nav link to settings', fakeAsync(() => {
+        const link = getDOM().querySelector(el, 'a[href="/users/edit"]');
+        expect(link).toBeTruthy();
+      }));
+    });
+
     it('shows a nav link to logout', fakeAsync(() => {
       const link = getDOM().querySelector(el, 'a.logout');
       expect(link).toBeTruthy();
@@ -122,6 +148,11 @@ describe('HeaderComponent', () => {
       expect(link).toBeNull();
     });
 
+    it('does not show a nav link to users', () => {
+      const link = getDOM().querySelector(el, 'a[href="/users"]');
+      expect(link).toBeNull();
+    });
+
     it('shows a nav link to help', fakeAsync(() => {
       const link = getDOM().querySelector(el, 'a[href="/help"]');
       expect(link).toBeTruthy();
@@ -130,6 +161,16 @@ describe('HeaderComponent', () => {
       const activatedNav = getDOM().querySelector(el, '.nav-item.active > a[href="/help"]');
       expect(activatedNav).toBeTruthy();
     }));
+
+    it('does not show a nav link to profile', () => {
+      const link = getDOM().querySelector(el, 'a[href="/users/me"]');
+      expect(link).toBeNull();
+    });
+
+    it('does not show a nav link to settings', () => {
+      const link = getDOM().querySelector(el, 'a[href="/users/me/edit"]');
+      expect(link).toBeNull();
+    });
 
     it('shows a nav link to sign in', fakeAsync(() => {
       const link = getDOM().querySelector(el, 'a[href="/login"]');

@@ -3,14 +3,21 @@
           [mptStyles]="[styles.navbarToggler]" (click)="toggleMenu($event)">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" [routerLink]="['']">Simple CORE</a>
+  <a class="navbar-brand" [routerLink]="['']">Curiopedia Web Client</a>
   <div class="navbar-collapse" [hidden]="isMenuHidden">
 
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" *ngIf="isSignedIn" >
         <a class="nav-link" [routerLink]="['/users/me']">Home</a>
       </li>      
-      
+      <li class="nav-item" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}" *ngIf="isSignedIn && !isGuest">
+        <a class="nav-link" [routerLink]="['/users']">Users</a>
+      </li>      
+      <li class="nav-item" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}" *ngIf="isSignedIn && isAdmin">
+        <a class="nav-link" [routerLink]="['/adminPanel']">Admin panel</a>
+      </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['/help']">Help</a>
       </li>
@@ -20,6 +27,14 @@
     </ul>
 
     <ul class="navbar-nav my-2 my-lg-0">
+      <li class="nav-item" routerLinkActive="active" *ngIf="isSignedIn && !isGuest"
+          [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" [routerLink]="['/users/me']">Profile</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" *ngIf="isSignedIn && !isGuest"
+          [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" [routerLink]="['/users/edit']">Settings</a>
+      </li>
       <li class="nav-item">
         <a class="nav-link logout" href="#"
            (click)="logout(); $event.preventDefault()">Logout</a>

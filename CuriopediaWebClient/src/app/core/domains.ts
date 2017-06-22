@@ -4,3 +4,7 @@ export interface User {
   name?:string;
   authority?:string;
 }
+
+export interface Authority {
+  name?:string;
+}

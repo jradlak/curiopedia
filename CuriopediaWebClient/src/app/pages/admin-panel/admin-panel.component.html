@@ -1,0 +1,64 @@
+<h1>Control panel</h1>
+<ul class="users list-unstyled">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Role</th>
+                <th>Operation</th>
+            </tr>
+        </thead>
+        <tr *ngFor="let u of users" class="clearfix" [mptStyles]="[styles.list]">    
+            <td>
+                <a [routerLink]="['/users', u.id]">{{u.name}}</a>
+            </td>
+            <td>
+                <select class="form-control" style="width:200px" id="authInput" [ngModel]="u.authority" 
+                (ngModelChange)="modalConfirmChange.show({usr: u, event: $event}, u.name, 'authority')" required>
+                    <option *ngFor="let auth of authorities" [value]="auth.name">{{auth.name}}</option>
+                </select>
+            </td>
+            <td>
+                <button type="button" class="btn btn-warning" (click)="onEdit(u)">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-danger" (click)="modalConfirm.show(u, u.name, 'delete')">
+                    Delete
+                </button>
+            </td>
+        </tr>
+    </table>
+</ul>
+
+<div class="clearfix">
+  <mpt-pager class="float-left"
+             (pageChanged)="onPageChanged($event.page)"
+             [totalPages]="totalPages"
+             [currentPage]="page"></mpt-pager>
+</div>
+
+  <app-modal #modalConfirm>
+    <div class="app-modal-header">
+      Confirmation question.
+    </div>
+    <div class="app-modal-body">
+      Please confirm, that you want to delete user: <b>{{modalConfirm.message}}</b>
+    </div>
+    <div class="app-modal-footer">      
+      <button type="button" class="btn btn-primary" (click)="modalConfirm.reject()">Reject</button>
+      <button type="button" class="btn btn-danger" (click)="modalConfirm.confirm()">Confirm</button>                              
+    </div>
+  </app-modal>
+
+  <app-modal #modalConfirmChange>
+    <div class="app-modal-header">
+      Confirmation question.
+    </div>
+    <div class="app-modal-body">
+      Please confirm, that you want to change user: <b>{{modalConfirmChange.message}}</b>
+    </div>
+    <div class="app-modal-footer">      
+      <button type="button" class="btn btn-primary" (click)="modalConfirmChange.reject()">Reject</button>
+      <button type="button" class="btn btn-danger" (click)="modalConfirmChange.confirm()">Confirm</button>                              
+    </div>
+  </app-modal>
