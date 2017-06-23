@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import pl.com.curiopedia.domain.curio.entity.Curio;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -50,6 +51,10 @@ public class User implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
+    private List<Curio> curios;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

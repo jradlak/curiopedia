@@ -6,7 +6,7 @@ import {ENV_PROVIDERS} from "./environment";
 import {ROUTES} from "./app.routes";
 import {AppComponent} from "./app.component";
 import {CoreModule} from "./core";
-import {UserShowModule} from "/pages/user-show/user-show.module";
+import {UserShowModule} from "./pages/user-show/user-show.module";
 import {AuthModule} from "./pages/auth/auth.module";
 import {TopModule} from "./pages/top/top.module";
 import {NoContentComponent} from "./pages/no-content/no-content.component";
