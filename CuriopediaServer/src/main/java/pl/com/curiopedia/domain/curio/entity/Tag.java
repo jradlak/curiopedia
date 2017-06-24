@@ -1,6 +1,7 @@
 package pl.com.curiopedia.domain.curio.entity;
 
 import lombok.*;
+import pl.com.curiopedia.domain.curio.dto.TagsDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

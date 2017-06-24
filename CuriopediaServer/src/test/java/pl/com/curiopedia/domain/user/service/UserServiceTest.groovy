@@ -19,7 +19,7 @@ import pl.com.curiopedia.domain.user.repository.UserRepository
 class UserServiceTest extends BaseServiceTest {
 
     @Autowired
-    AuthorityRepository authorityRepository;
+    AuthorityRepository authorityRepository
 
     @Autowired
     UserRepository userRepository

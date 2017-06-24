@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Value;
+import pl.com.curiopedia.domain.curio.entity.Curio;
 import pl.com.curiopedia.domain.user.dto.UserDTO;
 import pl.com.curiopedia.tools.LocalDateDeserializer;
 import pl.com.curiopedia.tools.LocalDateSerializer;
@@ -34,4 +35,11 @@ public class CurioDTO {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate creationDate;
+
+    public Curio toCurio() {
+        Curio curio = new Curio();
+
+
+        return curio;
+    }
 }
