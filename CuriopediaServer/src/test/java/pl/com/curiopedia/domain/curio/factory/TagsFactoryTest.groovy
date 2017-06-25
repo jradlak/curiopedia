@@ -33,12 +33,9 @@ class TagsFactoryTest extends BaseServiceTest {
         then:
         result.size() == 3
         tagsDb.size() == 4
-        result.contains(new Tag("Tag2"))
-        result.contains(new Tag("Tag3"))
-        result.contains(new Tag("Tag4"))
-        tagsDb.contains(new Tag("Tag2"))
-        tagsDb.contains(new Tag("Tag3"))
-        tagsDb.contains(new Tag("Tag4"))
-        tagsDb.contains(new Tag("Tag1"))
+        result.containsAll(Arrays.asList(new Tag("Tag2"),
+                new Tag("Tag3"), new Tag("Tag4")))
+        tagsDb.containsAll(Arrays.asList(new Tag("Tag2"),
+                new Tag("Tag3"), new Tag("Tag4"), new Tag("Tag1")))
     }
 }
