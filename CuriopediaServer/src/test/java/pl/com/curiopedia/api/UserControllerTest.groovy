@@ -21,7 +21,6 @@ import static org.hamcrest.Matchers.hasSize
 import static org.hamcrest.Matchers.is
 import static org.hamcrest.Matchers.nullValue
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -74,7 +73,7 @@ class UserControllerTest extends BaseControllerTest {
                 User u = new User(id: it, username: "test${it}@test.com", password: "secret", name: "test${it}")
                 UserDTO.builder()
                         .id(u.id)
-                        .name(u.name)
+                        .username(u.name)
                         .authority(Authority.ROLE_AUTHOR)
                         .build()
             }
@@ -89,9 +88,9 @@ class UserControllerTest extends BaseControllerTest {
             andExpect(status().isOk())
             andExpect(jsonPath('$.content').exists())
             andExpect(jsonPath('$.content', hasSize(2)))
-            andExpect(jsonPath('$.content[0].name', is("test0")))
+            andExpect(jsonPath('$.content[0].username', is("test0")))
             andExpect(jsonPath('$.content[0].email', nullValue()))
-            andExpect(jsonPath('$.content[1].name', is("test1")))
+            andExpect(jsonPath('$.content[1].username', is("test1")))
         }
     }
 
@@ -101,7 +100,7 @@ class UserControllerTest extends BaseControllerTest {
             User user = new User(id: 1, username: "test1@test.com", password: "secret", name: "test")
             UserDTO userDTO = UserDTO.builder()
                     .id(user.id)
-                    .name(user.name)
+                    .username(user.name)
                     .authority(Authority.ROLE_AUTHOR)
                     .build()
             return Optional.of(userDTO)
@@ -113,7 +112,7 @@ class UserControllerTest extends BaseControllerTest {
         then:
         with(response) {
             andExpect(status().isOk())
-            andExpect(jsonPath('$.name', is("test")))
+            andExpect(jsonPath('$.username', is("test")))
             andExpect(jsonPath('$.email', nullValue()))
         }
     }
@@ -137,7 +136,7 @@ class UserControllerTest extends BaseControllerTest {
         userService.findMe() >> {
             UserDTO userDTO = UserDTO.builder()
                     .id(user.id)
-                    .name(user.name)
+                    .username(user.name)
                     .email(user.username)
                     .authority(Authority.ROLE_AUTHOR)
                     .build()
@@ -150,7 +149,7 @@ class UserControllerTest extends BaseControllerTest {
         then:
         with(response) {
             andExpect(status().isOk())
-            andExpect(jsonPath('$.name', is("test")))
+            andExpect(jsonPath('$.username', is("test")))
             andExpect(jsonPath('$.email', is("test@test.com")))
         }
     }

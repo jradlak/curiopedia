@@ -34,4 +34,10 @@ public class Source {
 
     @Column(name ="date")
     private LocalDate date;
+
+    public Source(String name, String description, LocalDate date) {
+        this.name = name;
+        this.description = description;
+        this.date = date;
+    }
 }

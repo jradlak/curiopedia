@@ -1,6 +1,7 @@
 package pl.com.curiopedia.domain.curio.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,7 +9,7 @@ import pl.com.curiopedia.domain.user.entity.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ import java.util.Set;
 @ToString
 @Getter
 @Setter
+@Builder
 public class Curio {
 
     @Id
@@ -32,10 +34,10 @@ public class Curio {
     private String title;
 
     @Column(name ="creation_date")
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name ="modification_date")
-    private LocalDate modificationDate;
+    private LocalDateTime modificationDate;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
