@@ -7,6 +7,7 @@ import lombok.Value;
 import pl.com.curiopedia.tools.LocalDateDeserializer;
 import pl.com.curiopedia.tools.LocalDateSerializer;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class SourceDTO {
+    @NotNull
     private String name;
 
     private String description;

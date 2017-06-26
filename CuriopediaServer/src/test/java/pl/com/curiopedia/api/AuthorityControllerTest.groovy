@@ -51,8 +51,8 @@ class AuthorityControllerTest extends BaseControllerTest {
             andExpect(status().isOk())
             andExpect(jsonPath('$').exists())
             andExpect(jsonPath('$', hasSize(2)))
-            andExpect(jsonPath('$[0].username', is(Authority.ROLE_AUTHOR)))
-            andExpect(jsonPath('$[1].username', is(Authority.ROLE_ADMIN)))
+            andExpect(jsonPath('$[0].name', is(Authority.ROLE_AUTHOR)))
+            andExpect(jsonPath('$[1].name', is(Authority.ROLE_ADMIN)))
         }
     }
 }

@@ -13,6 +13,7 @@ import pl.com.curiopedia.domain.curio.repository.CategoryRepository
 import pl.com.curiopedia.domain.curio.repository.SourceRepository
 import pl.com.curiopedia.domain.curio.repository.TagRepository
 import pl.com.curiopedia.domain.user.dto.UserDTO
+import pl.com.curiopedia.domain.user.entity.Authority
 import pl.com.curiopedia.domain.user.entity.User
 import pl.com.curiopedia.domain.user.repository.UserRepository
 import pl.com.curiopedia.domain.user.service.BaseServiceTest
@@ -50,12 +51,11 @@ class CurioFactoryTest extends BaseServiceTest {
         given:
         userRepository.save(new User(username: "test1@test.com", password: "secret", name: "akira"))
         sourceRepository.save(new Source("source1", "sourceDesc1", LocalDate.now()))
-        categoryRepository.save(new Category("categpry1", "categoryDesc1"))
+        categoryRepository.save(new Category("category1", "categoryDesc1"))
         tagRepository.save(new Tag("tag1"))
 
-        //TODO: FIX BELOW!
         CurioDTO curioDTO = CurioDTO.builder()
-                .author(UserDTO.builder().username("test1@test.com").build())
+                .author(UserDTO.builder().username("test1@test.com").authority(Authority.ROLE_AUTHOR).build())
                 .category(CategoryDTO.builder().name("category1").build())
                 .source(SourceDTO.builder().name("source1").build())
                 .tags(TagsDTO.builder().tags(new HashSet<String>(Arrays.asList("Tag1"))).build())
