@@ -7,7 +7,7 @@ import pl.com.curiopedia.domain.curio.repository.TagRepository
 import pl.com.curiopedia.domain.user.service.BaseServiceTest
 
 /**
- * Created by simple on 24.06.17.
+ * Created by jakub on 24.06.17.
  */
 @SuppressWarnings("GroovyPointlessBoolean")
 class TagsFactoryTest extends BaseServiceTest {

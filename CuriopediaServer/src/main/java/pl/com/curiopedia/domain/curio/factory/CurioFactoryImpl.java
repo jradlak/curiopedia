@@ -14,7 +14,7 @@ import pl.com.curiopedia.domain.user.service.exceptions.UserNotFoundException;
 import java.time.LocalDateTime;
 
 /**
- * Created by simple on 24.06.17.
+ * Created by jakub on 24.06.17.
  */
 @Component
 public class CurioFactoryImpl implements CurioFactory {

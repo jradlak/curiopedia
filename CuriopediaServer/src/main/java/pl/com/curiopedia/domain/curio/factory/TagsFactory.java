@@ -6,7 +6,7 @@ import pl.com.curiopedia.domain.curio.entity.Tag;
 import java.util.Set;
 
 /**
- * Created by simple on 24.06.17.
+ * Created by jakub on 24.06.17.
  */
 public interface TagsFactory {
     Set<Tag> makeSetOfTags(TagsDTO tagsDTO);

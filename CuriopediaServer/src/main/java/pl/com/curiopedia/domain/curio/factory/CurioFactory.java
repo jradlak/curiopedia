@@ -7,7 +7,7 @@ import pl.com.curiopedia.domain.curio.exceptions.SourceNotFoundException;
 import pl.com.curiopedia.domain.user.service.exceptions.UserNotFoundException;
 
 /**
- * Created by simple on 24.06.17.
+ * Created by jakub on 24.06.17.
  */
 public interface CurioFactory {
     Curio makeCurio(CurioDTO curioDTO) throws UserNotFoundException, CategoryNotFoundException, SourceNotFoundException;

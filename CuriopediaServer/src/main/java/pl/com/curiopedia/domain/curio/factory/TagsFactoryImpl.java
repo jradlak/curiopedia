@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Created by simple on 24.06.17.
+ * Created by jakub on 24.06.17.
  */
 @Component
 public class TagsFactoryImpl implements TagsFactory {
