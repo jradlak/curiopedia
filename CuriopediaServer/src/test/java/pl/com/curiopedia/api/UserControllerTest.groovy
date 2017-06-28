@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by jakub on 20.06.17.
  */
-
 @WebMvcTest(UserController)
 class UserControllerTest extends BaseControllerTest {
 

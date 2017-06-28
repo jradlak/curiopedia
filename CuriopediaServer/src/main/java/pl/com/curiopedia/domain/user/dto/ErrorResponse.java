@@ -7,6 +7,26 @@ import lombok.Value;
  */
 @Value
 public class ErrorResponse {
+
+    public final static String EMAIL_TAKEN = "email_already_taken";
+
+    public final static String EMAIL_TAKEN_MSG = "This email is already taken.";
+
+
+    public final static String NO_USER = "no_user";
+
+    public final static String NO_USER_MSG = "User not found.";
+
+
+    public final static String NO_CATEGORY = "no_category";
+
+    public final static String NO_CATEGORY_MSG = "Category not found";
+
+
+    public final static String NO_SOURCE = "no_source";
+
+    public final static String NO_SOURCE_MSG = "Source not found";
+
     private final String code;
     private final String message;
 }

@@ -73,11 +73,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorResponse handleValidationException(DataIntegrityViolationException e) {
-        return new ErrorResponse("email_already_taken", "This email is already taken.");
+        return new ErrorResponse(ErrorResponse.EMAIL_TAKEN, ErrorResponse.EMAIL_TAKEN_MSG);
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "No user")
     @ExceptionHandler(UserNotFoundException.class)
-    public void handleUserNotFound() {
+    public ErrorResponse handleUserNotFound() {
+        return new ErrorResponse(ErrorResponse.NO_USER, ErrorResponse.NO_USER_MSG);
     }
 }
