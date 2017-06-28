@@ -69,5 +69,11 @@ class CurioFactoryTest extends BaseServiceTest {
 
         then:
         curio.title == "curio1"
+        curio.author.username == "test1@test.com"
+        curio.category.name == "category1"
+        curio.source.name == "source1"
+        curio.tags.contains(new Tag("Tag1"))
+        curio.content == "content1"
+        curio.description == "description1"
     }
 }
