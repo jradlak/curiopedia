@@ -74,15 +74,16 @@ class CurioControllerTest extends BaseControllerTest{
 
     def "can create curio"() {
         given:
-        userRepository.save(new User(username: "test1@test.com", password: "secret", name: "akira"))
+        signIn()
+        userRepository.save(new User(username: "test123@test.com", password: "secret", name: "akira123"))
         sourceRepository.save(new Source("source1", "sourceDesc1", LocalDate.now()))
         categoryRepository.save(new Category("category1", "categoryDesc1"))
         tagRepository.save(new Tag("tag1"))
 
         CurioDTO curioDTO = CurioDTO.builder()
-                .author(UserDTO.builder().username("test1@test.com").authority(Authority.ROLE_AUTHOR).build())
-                .category(CategoryDTO.builder().name("category1").build())
-                .source(SourceDTO.builder().name("source1").build())
+                .author("test123@test.com")
+                .category("category1")
+                .source("source1")
                 .tags(TagsDTO.builder().tags(new HashSet<String>(Arrays.asList("Tag1"))).build())
                 .title("curio1")
                 .content("content1")
@@ -90,9 +91,10 @@ class CurioControllerTest extends BaseControllerTest{
                 .build()
 
         when:
+        String curioJson = toJson(curioDTO)
         def response = perform(post("/api/curios")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(curioDTO))
+                .content(curioJson)
         )
 
         then:

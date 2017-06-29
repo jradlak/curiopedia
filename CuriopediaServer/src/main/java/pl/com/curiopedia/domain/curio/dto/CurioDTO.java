@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.Value;
+import pl.com.curiopedia.domain.curio.entity.Category;
 import pl.com.curiopedia.domain.user.dto.UserDTO;
 import pl.com.curiopedia.tools.LocalDateDeserializer;
 import pl.com.curiopedia.tools.LocalDateSerializer;
@@ -16,6 +19,8 @@ import java.time.LocalDateTime;
  */
 @Value
 @Builder
+@ToString
+@EqualsAndHashCode
 public class CurioDTO {
 
     private String title;
@@ -26,21 +31,19 @@ public class CurioDTO {
 
     private TagsDTO tags;
 
-    private UserDTO author;
+    private String author;
 
-    private CategoryDTO category;
+    private String category;
 
-    private SourceDTO source;
+    private String source;
 
     public CurioDTO(@JsonProperty("title") String title,
                     @JsonProperty("description") String description,
                     @JsonProperty("content") String content,
                     @JsonProperty("tags") TagsDTO tags,
-                    @JsonProperty("author") UserDTO author,
-                    @JsonProperty("category") CategoryDTO category,
-                    @JsonProperty("source") SourceDTO source,
-                    @JsonProperty("creationDate") LocalDateTime creationDate,
-                    @JsonProperty("modificationDate") LocalDateTime modificationDate) {
+                    @JsonProperty("author") String author,
+                    @JsonProperty("category") String category,
+                    @JsonProperty("source") String source) {
         this.title = title;
         this.description = description;
         this.content = content;
@@ -48,16 +51,6 @@ public class CurioDTO {
         this.author = author;
         this.category = category;
         this.source = source;
-        this.creationDate = creationDate;
-        this.modificationDate = modificationDate;
     }
-
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime creationDate;
-
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime modificationDate;
 }
 

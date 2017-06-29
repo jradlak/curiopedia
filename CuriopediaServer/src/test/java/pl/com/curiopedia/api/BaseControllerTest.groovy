@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.RequestBuilder
 import org.springframework.test.web.servlet.ResultActions
 import pl.com.curiopedia.auth.TokenAuthenticationService
 import pl.com.curiopedia.auth.UserAuthentication
+import pl.com.curiopedia.domain.user.entity.Authority
 import pl.com.curiopedia.domain.user.entity.User
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
@@ -55,6 +56,7 @@ abstract class BaseControllerTest extends Specification {
 
     User signIn() {
         User user = new User(id: 1, username: "test@test.com", password: "secret123", name: "test")
+        user.setAuthorities(new HashSet<Authority>(Arrays.asList(new Authority(Authority.ROLE_AUTHOR))))
         Authentication auth = new UserAuthentication(user)
         tokenAuthenticationService.getAuthentication(_ as HttpServletRequest) >> auth
         return user

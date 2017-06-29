@@ -41,12 +41,12 @@ public class CurioFactoryImpl implements CurioFactory {
     public Curio makeCurio(CurioDTO curioDTO) throws UserNotFoundException,
             CategoryNotFoundException, SourceNotFoundException {
         Curio curio = Curio.builder()
-                .author(userRepository.findOneByUsername(curioDTO.getAuthor()
-                        .getUsername()).orElseThrow(UserNotFoundException::new))
-                .category(categoryRepository.findOneByName(curioDTO.getCategory()
-                        .getName()).orElseThrow(CategoryNotFoundException::new))
-                .source(sourceRepository.findOneByName(curioDTO.getSource()
-                        .getName()).orElseThrow(SourceNotFoundException::new))
+                .author(userRepository.findOneByUsername(curioDTO.getAuthor())
+                        .orElseThrow(UserNotFoundException::new))
+                .category(categoryRepository.findOneByName(curioDTO.getCategory())
+                        .orElseThrow(CategoryNotFoundException::new))
+                .source(sourceRepository.findOneByName(curioDTO.getSource())
+                        .orElseThrow(SourceNotFoundException::new))
                 .tags(tagsFactory.makeSetOfTags(curioDTO.getTags()))
                 .title(curioDTO.getTitle())
                 .content(curioDTO.getContent())

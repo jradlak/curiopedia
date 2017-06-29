@@ -1,9 +1,7 @@
 package pl.com.curiopedia.domain.curio.factory
 
 import org.springframework.beans.factory.annotation.Autowired
-import pl.com.curiopedia.domain.curio.dto.CategoryDTO
 import pl.com.curiopedia.domain.curio.dto.CurioDTO
-import pl.com.curiopedia.domain.curio.dto.SourceDTO
 import pl.com.curiopedia.domain.curio.dto.TagsDTO
 import pl.com.curiopedia.domain.curio.entity.Category
 import pl.com.curiopedia.domain.curio.entity.Curio
@@ -12,8 +10,6 @@ import pl.com.curiopedia.domain.curio.entity.Tag
 import pl.com.curiopedia.domain.curio.repository.CategoryRepository
 import pl.com.curiopedia.domain.curio.repository.SourceRepository
 import pl.com.curiopedia.domain.curio.repository.TagRepository
-import pl.com.curiopedia.domain.user.dto.UserDTO
-import pl.com.curiopedia.domain.user.entity.Authority
 import pl.com.curiopedia.domain.user.entity.User
 import pl.com.curiopedia.domain.user.repository.UserRepository
 import pl.com.curiopedia.domain.user.service.BaseServiceTest
@@ -55,9 +51,9 @@ class CurioFactoryTest extends BaseServiceTest {
         tagRepository.save(new Tag("tag1"))
 
         CurioDTO curioDTO = CurioDTO.builder()
-                .author(UserDTO.builder().username("test1@test.com").authority(Authority.ROLE_AUTHOR).build())
-                .category(CategoryDTO.builder().name("category1").build())
-                .source(SourceDTO.builder().name("source1").build())
+                .author("test1@test.com")
+                .category("category1")
+                .source("source1")
                 .tags(TagsDTO.builder().tags(new HashSet<String>(Arrays.asList("Tag1"))).build())
                 .title("curio1")
                 .content("content1")
