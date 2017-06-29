@@ -25,7 +25,6 @@ public class CurioServiceImpl implements CurioService {
     @Override
     public Curio createCurio(CurioDTO curioParams) throws UserNotFoundException,
             SourceNotFoundException, CategoryNotFoundException {
-        //TODO
         return curioFactory.makeCurio(curioParams);
     }
 }
