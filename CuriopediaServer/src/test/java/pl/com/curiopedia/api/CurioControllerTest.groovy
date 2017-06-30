@@ -10,6 +10,7 @@ import pl.com.curiopedia.domain.curio.dto.CurioDTO
 import pl.com.curiopedia.domain.curio.dto.SourceDTO
 import pl.com.curiopedia.domain.curio.dto.TagsDTO
 import pl.com.curiopedia.domain.curio.entity.Category
+import pl.com.curiopedia.domain.curio.entity.Curio
 import pl.com.curiopedia.domain.curio.entity.Source
 import pl.com.curiopedia.domain.curio.entity.Tag
 import pl.com.curiopedia.domain.curio.exceptions.SourceNotFoundException
@@ -26,14 +27,18 @@ import spock.mock.DetachedMockFactory
 import java.time.LocalDate
 
 import static groovy.json.JsonOutput.toJson
+import static org.hamcrest.Matchers.hasSize
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 /**
  * Created by jakub on 28.06.17.
  */
 @WebMvcTest(CurioController)
-class CurioControllerTest extends BaseControllerTest{
+//TODO: completely rewrite this! It's WRONG!!!
+class CurioControllerTest extends BaseControllerTest {
     @TestConfiguration
     static class Config {
         @Bean
@@ -100,7 +105,6 @@ class CurioControllerTest extends BaseControllerTest{
         then:
         with(response) {
             andExpect(status().isOk())
-            //andExpect(jsonPath('$.code', is("email_already_taken")))
         }
     }
 }
