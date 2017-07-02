@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import pl.com.curiopedia.domain.curio.dto.CurioDTO;
 import pl.com.curiopedia.domain.user.entity.User;
 
 import javax.persistence.*;
@@ -62,4 +63,18 @@ public class Curio {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     private Source source;
+
+    public CurioDTO toDTO() {
+        return CurioDTO.builder()
+                .title(title)
+                .description(description)
+                .content(content)
+                .creationDate(creationDate)
+                .modificationDate(modificationDate)
+                .author(author.getName())
+                .category(category.getName())
+                .source(source.getName())
+                .build();
+    }
+
 }
