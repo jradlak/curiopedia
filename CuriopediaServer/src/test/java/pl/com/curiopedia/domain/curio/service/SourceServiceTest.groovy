@@ -30,7 +30,7 @@ class SourceServiceTest extends BaseServiceTest{
         SourceDTO sourceDTO = SourceDTO.builder()
             .name("source1")
             .description("description1")
-            .date(now)
+            .date(now.toString())
             .build()
 
         when:

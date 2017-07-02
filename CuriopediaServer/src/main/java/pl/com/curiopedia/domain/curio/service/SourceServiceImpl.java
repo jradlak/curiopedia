@@ -7,6 +7,7 @@ import pl.com.curiopedia.domain.curio.entity.Curio;
 import pl.com.curiopedia.domain.curio.entity.Source;
 import pl.com.curiopedia.domain.curio.repository.SourceRepository;
 
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +24,7 @@ public class SourceServiceImpl implements SourceService {
     @Override
     public Source createSource(SourceDTO sourceDTO) {
         return sourceRepository.save(Source.builder()
-            .date(sourceDTO.getDate())
+            .date(LocalDate.parse(sourceDTO.getDate()))
             .name(sourceDTO.getName())
             .description(sourceDTO.getDescription())
             .build());
@@ -35,8 +36,7 @@ public class SourceServiceImpl implements SourceService {
                 .map(s -> SourceDTO.builder()
                     .name(s.getName())
                     .description(s.getDescription())
-                    .date(s.getDate())
-                    .curios(s.getCurios().stream().map(Curio::toDTO).collect(Collectors.toList()))
+                    .date(s.getDate().toString())
                     .build());
     }
 }

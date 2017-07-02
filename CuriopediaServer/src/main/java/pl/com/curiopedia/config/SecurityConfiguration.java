@@ -59,6 +59,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.GET, "/api/categories").hasAuthority(Authority.ROLE_AUTHOR)
                 .antMatchers(HttpMethod.POST, "/api/categories").hasAuthority(Authority.ROLE_AUTHOR)
+
+                .antMatchers(HttpMethod.GET, "/api/sources").hasAuthority(Authority.ROLE_AUTHOR)
+                .antMatchers(HttpMethod.POST, "/api/sources").hasAuthority(Authority.ROLE_AUTHOR)
+
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(new Http401AuthenticationEntryPoint("'Bearer token_type=\"JWT\"'"));

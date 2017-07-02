@@ -1,15 +1,7 @@
 package pl.com.curiopedia.domain.curio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
-import pl.com.curiopedia.domain.curio.entity.Category;
-import pl.com.curiopedia.domain.user.dto.UserDTO;
-import pl.com.curiopedia.tools.LocalDateDeserializer;
-import pl.com.curiopedia.tools.LocalDateSerializer;
-
-import java.time.LocalDateTime;
 
 /**
  * Created by jakub on 23.06.17.
@@ -34,13 +26,9 @@ public class CurioDTO {
 
     private String source;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime creationDate;
+    private String creationDate;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDateTime modificationDate;
+    private String modificationDate;
 
     public CurioDTO(@JsonProperty("title") String title,
                     @JsonProperty("description") String description,
@@ -49,8 +37,8 @@ public class CurioDTO {
                     @JsonProperty("author") String author,
                     @JsonProperty("category") String category,
                     @JsonProperty("source") String source,
-                    @JsonProperty("creationDate") LocalDateTime creationDate,
-                    @JsonProperty("modificationDate") LocalDateTime modificationDate) {
+                    @JsonProperty("creationDate") String creationDate,
+                    @JsonProperty("modificationDate") String modificationDate) {
         this.title = title;
         this.description = description;
         this.content = content;
