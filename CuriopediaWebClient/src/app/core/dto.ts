@@ -16,3 +16,8 @@ export interface UserParams {
   isGuest?: boolean;
   authority?: string;
 }
+
+export interface CategoryParams {
+  name:string;
+  description?:string;
+}

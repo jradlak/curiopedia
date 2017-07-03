@@ -8,3 +8,8 @@ export interface User {
 export interface Authority {
   name?:string;
 }
+
+export interface Category {
+  name:string;
+  description?:string;
+}

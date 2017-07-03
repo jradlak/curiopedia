@@ -1,0 +1,14 @@
+<h1>Categories</h1>
+
+<ul class="categories list-unstyled">
+  <li *ngFor="let c of categories" class="clearfix" [mptStyles]="[styles.list]">    
+    <a [routerLink]="['/categories', c.id]">{{c.name}}</a>
+  </li>
+</ul>
+
+<div class="clearfix">
+  <mpt-pager class="float-left"
+             (pageChanged)="onPageChanged($event.page)"
+             [totalPages]="totalPages"
+             [currentPage]="page"></mpt-pager>
+</div>
