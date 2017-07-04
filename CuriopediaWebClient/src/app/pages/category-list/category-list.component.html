@@ -2,7 +2,7 @@
 
 <ul class="categories list-unstyled">
   <li *ngFor="let c of categories" class="clearfix" [mptStyles]="[styles.list]">    
-    <a [routerLink]="['/categories', c.id]">{{c.name}}</a>
+    <a [routerLink]="['/categories', c.name]">{{c.name}}</a>
   </li>
 </ul>
 

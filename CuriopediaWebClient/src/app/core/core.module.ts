@@ -4,6 +4,7 @@ import {SkipSelf, Optional} from "@angular/core";
 import {HttpErrorHandler} from "./services/http-error-handler";
 import {AuthService} from "./services/auth.service";
 import {UserService} from "./services/user.service";
+import {CategoryService} from "./services/category.service";
 import {AuthoritiesService} from "./services/authorities.service";
 import {PrivatePageGuard} from "./services/private-page.guard";
 import {PublicPageGuard} from "./services/public-page.guard";
@@ -36,6 +37,7 @@ export function createJsonHttp(xhrBackend: XHRBackend, requestOptions: RequestOp
     HttpErrorHandler,
     AuthService,
     UserService,
+    CategoryService,
     AuthoritiesService,
     ProfileDataResolver,
     PrivatePageGuard,

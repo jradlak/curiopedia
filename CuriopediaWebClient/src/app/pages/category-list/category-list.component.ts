@@ -3,13 +3,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Category} from "../../core/domains";
 import {CategoryService} from "../../core/services/category.service";
 import {HttpErrorHandler} from "../../core/services/http-error-handler";
-import {styles} from './user-list.component.styles';
+import {styles} from './category-list.component.styles';
 
 @Component({
   selector: 'mpt-category-list',
   templateUrl: 'category-list.component.html',
 })
-export class UserListComponent implements OnInit {
+export class CategoryListComponent implements OnInit {
 
   styles: any = styles;
   categories: Category[];

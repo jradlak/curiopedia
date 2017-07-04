@@ -17,10 +17,15 @@ export const ROUTES: Routes = [
   {
     path: 'users/:id',
     loadChildren: './pages/user-show/user-show.module#UserShowModule',
-  },
+  },  
   {
     path: 'users',
     loadChildren: './pages/user-list/user-list.module#UserListModule',
+    canActivate: [PrivatePageGuard],
+  },
+  {
+    path: 'categories',
+    loadChildren: './pages/category-list/category-list.module#CategoryListModule',
     canActivate: [PrivatePageGuard],
   },
   {path: 'login', component: AuthComponent, canActivate: [PublicPageGuard]},
