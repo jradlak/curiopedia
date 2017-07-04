@@ -59,7 +59,7 @@ describe('CategoryService', () => {
   }); // .list
 
   describe('.create', () => {
-    it("create user", (done) => {
+    it("create category", (done) => {
       const params:  CategoryParams = {
         name: 'cat3',
         description: 'desc3'
