@@ -35,8 +35,8 @@ describe('UserListComponent', () => {
   const dummyResponse = new Response(new ResponseOptions({
     body: JSON.stringify({
       content: [
-        {id: 1, avatarHash: '9a3f499f653f7e8d4c5bf3ae0cf6418f', name: 'test1'},
-        {id: 2, avatarHash: '8a3f499f653f7e8d4c5bf3ae0cf6418f', name: 'test2'},
+        {id: 1, name: 'test1'},
+        {id: 2, name: 'test2'},
       ],
       totalPages: 1,
       totalElements: 2,

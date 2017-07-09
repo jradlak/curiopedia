@@ -1,0 +1,43 @@
+<h1>Edit category</h1>
+
+<form [formGroup]="myForm" (submit)="onSubmit(myForm.value)" novalidate>
+
+  <div class="form-group"
+       [class.has-danger]="!name.valid && name.touched">
+    <label class="col-form-label" for="nameInput">Name</label>
+    <input
+      type="text"
+      class="form-control form-control-danger"
+      id="nameInput"
+      placeholder="Name"
+      maxlength="30"
+      formControlName="name"/>
+    <div *ngIf="name.hasError('required') && name.touched"
+         class="form-control-feedback">Name is required
+    </div>
+    <div *ngIf="name.hasError('minlength') && name.touched"
+         class="form-control-feedback">Name must be longer than 4 chars.
+    </div>
+  </div>
+
+  <div class="form-group"
+       [class.has-danger]="!description.valid && description.touched">
+    <label class="col-form-label" for="descriptionInput">description</label>
+    <input
+      type="description"
+      class="form-control form-control-danger"
+      id="descriptionInput"
+      placeholder="description"
+      maxlength="30"
+      formControlName="description"/>
+    <div *ngIf="description.hasError('required') && description.touched"
+         class="form-control-feedback">description is required
+    </div>
+    <div *ngIf="description.hasError('pattern') && description.touched"
+         class="form-control-feedback">Invalid format
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+
+</form>
