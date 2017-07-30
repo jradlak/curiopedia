@@ -28,6 +28,11 @@ export const ROUTES: Routes = [
     loadChildren: './pages/category-list/category-list.module#CategoryListModule',
     canActivate: [PrivatePageGuard],
   },
+  {
+    path: 'categories/edit',
+    loadChildren: './pages/category-edit/category-edit.module#CategoryEditModule',
+    canActivate: [PrivatePageGuard],
+  },
   {path: 'login', component: AuthComponent, canActivate: [PublicPageGuard]},
   {
     path: 'signup',

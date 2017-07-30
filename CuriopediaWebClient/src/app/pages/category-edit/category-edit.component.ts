@@ -11,7 +11,7 @@ import {ToastService} from "../../components/toast/toast.service";
 })
 export class CategoryEditComponent implements OnInit {
 
-  myForm: FormGroup;
+  categoryForm: FormGroup;
   name: FormControl;
   description: FormControl
 
@@ -28,9 +28,9 @@ export class CategoryEditComponent implements OnInit {
   }
 
   onSubmit(params) {
-    values(this.myForm.controls).forEach(c => c.markAsTouched());
+    values(this.categoryForm.controls).forEach(c => c.markAsTouched());
 
-    if (!this.myForm.valid) return;
+    if (!this.categoryForm.valid) return;
 
     this.categoryService.create(params)
       .subscribe(() => {          
@@ -47,7 +47,7 @@ export class CategoryEditComponent implements OnInit {
       Validators.required,      
     ]));
     
-    this.myForm = new FormGroup({
+    this.categoryForm = new FormGroup({
       name: this.name,
       description: this.description,      
     });

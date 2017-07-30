@@ -33,7 +33,7 @@ describe('UserEditComponent', () => {
     id: 1,
     email: "test@test.com",
     name: "test user",
-    authority: "ROLE_USER"    
+    authority: "ROLE_AUTHOR"    
   };
 
   beforeEach(() => {
