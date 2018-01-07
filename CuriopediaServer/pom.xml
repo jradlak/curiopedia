@@ -11,14 +11,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
         <relativePath/>
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <start-class>pl.com.curiopedia.Application</start-class>
+        <start-class>pl.com.curiopedia.CuriopediaApplication</start-class>
         <querydsl.version>4.1.4</querydsl.version>
         <spock.version>1.1-groovy-2.4-rc-2</spock.version>
     </properties>
@@ -135,7 +135,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>pl.com.curiopedia.Application</mainClass>
+                    <mainClass>pl.com.curiopedia.CuriopediaApplication</mainClass>
                     <executable>true</executable>
                 </configuration>
             </plugin>

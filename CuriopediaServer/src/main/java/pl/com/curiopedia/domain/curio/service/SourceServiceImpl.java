@@ -2,6 +2,7 @@ package pl.com.curiopedia.domain.curio.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 import pl.com.curiopedia.domain.curio.dto.SourceDTO;
 import pl.com.curiopedia.domain.curio.entity.Curio;
 import pl.com.curiopedia.domain.curio.entity.Source;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Created by jakub on 02.07.17.
  */
+@Service
 public class SourceServiceImpl implements SourceService {
 
     private final SourceRepository sourceRepository;

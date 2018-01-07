@@ -9,11 +9,11 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
  * Created by jakub on 18.06.17.
  */
 @EntityScan(
-        basePackageClasses = {Application.class, Jsr310JpaConverters.class}
+        basePackageClasses = {CuriopediaApplication.class, Jsr310JpaConverters.class}
 )
 @SpringBootApplication
-public class Application {
+public class CuriopediaApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(CuriopediaApplication.class, args);
     }
 }
