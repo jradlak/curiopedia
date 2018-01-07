@@ -18,7 +18,7 @@ import java.util.*;
  * Created by jakub on 19.06.17.
  */
 @Entity
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
+@Table(name = "curiopedia_user", uniqueConstraints = @UniqueConstraint(columnNames = {"username"}))
 @ToString
 @Getter
 @Setter
