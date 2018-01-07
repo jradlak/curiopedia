@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll(pageable).map(u -> UserDTO.builder()
                 .id(u.getId())
                 .username(u.getName())
+                .name(u.getName())
                 .email(u.getUsername())
                 .authority(makeAuthority(u.getAuthorities()))
                 .build()

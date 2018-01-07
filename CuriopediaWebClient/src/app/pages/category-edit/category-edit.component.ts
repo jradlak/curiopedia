@@ -34,7 +34,7 @@ export class CategoryEditComponent implements OnInit {
 
     this.categoryService.create(params)
       .subscribe(() => {          
-          this.toastService.success('Successfully updated.');
+          this.toastService.success('Successfully created.');
         }, e => this.handleError(e));      
   }
 
