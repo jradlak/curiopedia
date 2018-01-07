@@ -7,8 +7,13 @@ export function login() {
   });
 }
 
+export function loginAuthor() {
+  return inject([AuthService], (authService) => {
+    spyOn(authService, 'isAuthor').and.returnValue(true);
+  });
+}
+
 export function advance(fixture: ComponentFixture<any>, millis?:number): void {
   tick(millis);
   fixture.detectChanges();
 }
-

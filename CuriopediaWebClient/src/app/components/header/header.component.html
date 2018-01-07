@@ -13,9 +13,13 @@
       <li class="nav-item" routerLinkActive="active"
           [routerLinkActiveOptions]="{exact: true}" *ngIf="isSignedIn && !isGuest">
         <a class="nav-link" [routerLink]="['/users']">Users</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active"      
+          [routerLinkActiveOptions]="{exact: true}" *ngIf="isAuthor">
+        <a class="nav-link" [routerLink]="['/categories']">Categories</a>
       </li>      
       <li class="nav-item" routerLinkActive="active"
-          [routerLinkActiveOptions]="{exact: true}" *ngIf="isSignedIn && isAdmin">
+          [routerLinkActiveOptions]="{exact: true}" *ngIf="isAdmin">
         <a class="nav-link" [routerLink]="['/adminPanel']">Admin panel</a>
       </li>
       <li class="nav-item" routerLinkActive="active">

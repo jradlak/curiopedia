@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
 import {HeaderComponent} from "./header.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {CoreModule} from "../../core";
-import {APP_TEST_HTTP_PROVIDERS, login, advance} from "../../../testing";
+import {APP_TEST_HTTP_PROVIDERS, login, advance, loginAuthor} from "../../../testing";
 import {AuthService} from "../../core/services/auth.service";
 import {UserService} from "../../core/services/user.service";
 import {SharedModule} from "../../components-shared/shared.module";
@@ -44,6 +44,7 @@ describe('HeaderComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([         
           {path: 'users', component: BlankComponent},
+          {path: 'categories', component: BlankComponent},
           {path: 'help', component: BlankComponent},
           {path: 'users/:id', component: BlankComponent},
           {path: 'users/me/edit', component: BlankComponent},
@@ -135,6 +136,27 @@ describe('HeaderComponent', () => {
       expect(authService.logout).toHaveBeenCalled();
     }));
   }); // when signed in
+
+  describe('when author signed in', () => {
+    let authService: AuthService;
+
+    beforeEach(inject([AuthService], _ => authService = _));
+    beforeEach(loginAuthor());
+    beforeEach(initComponent());
+
+    it('can be shown', () => {
+      expect(cmpDebugElement).toBeTruthy();
+    });
+
+    it('shows a nav link to categories', fakeAsync(() => {
+      const link = getDOM().querySelector(el, 'a[href="/categories"]');
+      expect(link).toBeTruthy();
+      link.click();
+      advance(fixture);
+      const activatedNav = getDOM().querySelector(el, '.nav-item.active > a[href="/categories"]');
+      expect(activatedNav).toBeTruthy();
+    }));
+  }); // when author signed in
 
   describe('when not signed in', () => {
     beforeEach(initComponent());

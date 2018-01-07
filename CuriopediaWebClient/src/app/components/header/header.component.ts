@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   isSignedIn: boolean;
   isMenuHidden: boolean = true;
   isGuest: boolean = false;
+  isAuthor: boolean = false;
   isAdmin: boolean = false;
 
   constructor(private router: Router,
@@ -20,11 +21,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isSignedIn = this.authService.isSignedIn();
+    this.checkRoles();
     this.authService.events.subscribe(() => {
-      this.isSignedIn = this.authService.isSignedIn();
-      this.isGuest = this.authService.isGuest();
-      this.isAdmin = this.authService.isAdmin();      
+      this.checkRoles();
     });
   }
 
@@ -42,4 +41,10 @@ export class HeaderComponent implements OnInit {
     this.isMenuHidden = true;
   }
 
+  private checkRoles(): void {
+    this.isAuthor = this.authService.isAuthor();
+    this.isSignedIn = this.authService.isSignedIn();
+    this.isGuest = this.authService.isGuest();
+    this.isAdmin = this.authService.isAdmin();
+  }
 }

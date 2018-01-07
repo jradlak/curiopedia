@@ -10,6 +10,14 @@ const jwtDecode = require('jwt-decode');
 @Injectable()
 export class AuthService {
 
+  private readonly ROLE_GUEST = 'ROLE_GUEST';
+
+  private readonly ROLE_USER = 'ROLE_USER';
+
+  private readonly ROLE_AUTHOR = 'ROLE_AUTHOR';
+
+  private readonly ROLE_ADMIN = 'ROLE_ADMIN';
+
   private authEvents: Subject<AuthEvent>;
 
   constructor(private http: JsonHttp) {
@@ -40,15 +48,19 @@ export class AuthService {
   }
 
   isGuest(): boolean {
-    return localStorage.getItem('role') === 'ROLE_GUEST';
+    return localStorage.getItem('role') === this.ROLE_GUEST || this.isUser();
   }
 
   isUser(): boolean {
-    return localStorage.getItem('role') === 'ROLE_USER';
+    return localStorage.getItem('role') === this.ROLE_USER || this.isAuthor() || this.isAdmin();
+  }
+
+  isAuthor(): boolean {
+    return localStorage.getItem('role') === this.ROLE_AUTHOR || this.isAdmin();
   }
 
   isAdmin(): boolean {
-    return localStorage.getItem('role') === 'ROLE_ADMIN';
+    return localStorage.getItem('role') === this.ROLE_ADMIN;
   }
 
   isMyself(user: User): boolean|null {

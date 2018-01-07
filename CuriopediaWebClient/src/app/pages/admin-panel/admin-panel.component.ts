@@ -6,6 +6,8 @@ import {AuthoritiesService} from "../../core/services/authorities.service";
 import {HttpErrorHandler} from "../../core/services/http-error-handler";
 import {ModalService, DidConfirm, DidReject} from "../../components-shared/modal/modal.service";
 
+import {ToastService} from "../../components/toast/toast.service";
+
 import {styles} from './admin-panel.component.styles';
 import isEmpty from "lodash/isEmpty";
 import omitBy from "lodash/omitBy";
@@ -27,7 +29,8 @@ export class AdminPanelComponent implements OnInit {
               private authoritiesService: AuthoritiesService,
               private errorHandler: HttpErrorHandler,
               private route: ActivatedRoute,
-              private router: Router) {            
+              private router: Router,
+              private toastService: ToastService) {            
     }
   
   ngOnInit(): void {
@@ -96,6 +99,7 @@ export class AdminPanelComponent implements OnInit {
         authority: usr.authority             
       }, isEmpty)).subscribe(() => {          
         console.log('Successfully updated.');
+        this.toastService.success('Successfully updated.');
       }, e => console.log(e));
   }
 
@@ -108,6 +112,7 @@ export class AdminPanelComponent implements OnInit {
         authority: usr.authority             
       }, isEmpty)).subscribe(() => {
         console.log('Successfully deleted.');
+        this.toastService.success('Successfully deleted.');
         this.list(this.page);
       }, e => console.log(e));
   }
