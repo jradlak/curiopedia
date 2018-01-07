@@ -13,7 +13,7 @@ import {Router} from "@angular/router";
 import {HeaderComponent} from "./header.component";
 import {RouterTestingModule} from "@angular/router/testing";
 import {CoreModule} from "../../core";
-import {APP_TEST_HTTP_PROVIDERS, login, advance, loginAuthor} from "../../../testing";
+import {APP_TEST_HTTP_PROVIDERS, login, advance} from "../../../testing";
 import {AuthService} from "../../core/services/auth.service";
 import {UserService} from "../../core/services/user.service";
 import {SharedModule} from "../../components-shared/shared.module";
@@ -44,7 +44,8 @@ describe('HeaderComponent', () => {
       imports: [
         RouterTestingModule.withRoutes([         
           {path: 'users', component: BlankComponent},
-          {path: 'categories', component: BlankComponent},
+          {path: 'categories', component: BlankComponent},          
+          {path: 'adminPanel', component: BlankComponent},
           {path: 'help', component: BlankComponent},
           {path: 'users/:id', component: BlankComponent},
           {path: 'users/me/edit', component: BlankComponent},
@@ -83,7 +84,7 @@ describe('HeaderComponent', () => {
     let authService: AuthService;
 
     beforeEach(inject([AuthService], _ => authService = _));
-    beforeEach(login());
+    beforeEach(login('isSignedIn'));
     beforeEach(initComponent());
 
     it('can be shown', () => {
@@ -141,12 +142,8 @@ describe('HeaderComponent', () => {
     let authService: AuthService;
 
     beforeEach(inject([AuthService], _ => authService = _));
-    beforeEach(loginAuthor());
+    beforeEach(login('isAuthor'));
     beforeEach(initComponent());
-
-    it('can be shown', () => {
-      expect(cmpDebugElement).toBeTruthy();
-    });
 
     it('shows a nav link to categories', fakeAsync(() => {
       const link = getDOM().querySelector(el, 'a[href="/categories"]');
@@ -157,6 +154,23 @@ describe('HeaderComponent', () => {
       expect(activatedNav).toBeTruthy();
     }));
   }); // when author signed in
+
+  describe('when admin signed in', () => {
+    let authService: AuthService;
+
+    beforeEach(inject([AuthService], _ => authService = _));
+    beforeEach(login('isAdmin'));
+    beforeEach(initComponent());
+
+    it('shows a nav link to admin panel', fakeAsync(() => {
+      const link = getDOM().querySelector(el, 'a[href="/adminPanel"]');
+      expect(link).toBeTruthy();
+      link.click();
+      advance(fixture);
+      const activatedNav = getDOM().querySelector(el, '.nav-item.active > a[href="/adminPanel"]');
+      expect(activatedNav).toBeTruthy();
+    }));
+  }); // when admin signed in
 
   describe('when not signed in', () => {
     beforeEach(initComponent());
