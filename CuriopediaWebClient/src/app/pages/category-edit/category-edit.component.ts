@@ -27,15 +27,18 @@ export class CategoryEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initForm();
-
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.categoryService.get(params['id']).subscribe(c => {          
           this.category = c;
           this.editOther = true;
+          console.log(this.category);
           this.initForm();
         });
+      } else {
+        this.category.name = '';
+        this.category.description = '';
+        this.initForm();
       }
     });
   }
@@ -61,6 +64,8 @@ export class CategoryEditComponent implements OnInit {
       Validators.required,      
     ]));
     
+    //this.name.setValue(this.category.name);
+    //this.description.setValue(this.category.description);
     this.categoryForm = new FormGroup({
       name: this.name,
       description: this.description,      

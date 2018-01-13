@@ -8,6 +8,8 @@ import pl.com.curiopedia.domain.curio.dto.CategoryDTO;
 import pl.com.curiopedia.domain.curio.entity.Category;
 import pl.com.curiopedia.domain.curio.repository.CategoryRepository;
 
+import java.util.Optional;
+
 /**
  * Created by jakub on 29.06.17.
  */
@@ -32,9 +34,19 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Page<CategoryDTO> findAll(PageRequest pageable) {
         return categoryRepository.findAll(pageable)
-                .map(c -> CategoryDTO.builder()
-                    .name(c.getName())
-                    .description(c.getDescription())
-                    .build());
+                .map(c -> buildDTO(Optional.of(c)).get());
+    }
+
+    @Override
+    public Optional<CategoryDTO> findOne(Long id) {
+        return buildDTO(Optional.ofNullable(categoryRepository.findOne(id)));
+    }
+
+    private Optional<CategoryDTO> buildDTO(Optional<Category> category) {
+        return category.map(c -> CategoryDTO.builder()
+                .id(c.getId())
+                .name(c.getName())
+                .description(c.getDescription())
+                .build());
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import pl.com.curiopedia.domain.curio.dto.CategoryDTO;
+import pl.com.curiopedia.domain.curio.exceptions.CategoryNotFoundException;
 import pl.com.curiopedia.domain.curio.service.CategoryService;
 
 import javax.annotation.Nullable;
@@ -30,6 +31,12 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.POST)
     public void create(@Valid @RequestBody CategoryDTO categoryDTO) {
         categoryService.createCategory(categoryDTO);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "{id:\\d+}")
+    public CategoryDTO show(@PathVariable("id") Long id) throws CategoryNotFoundException {
+        return categoryService.findOne(id)
+                .orElseThrow(CategoryNotFoundException::new);
     }
 
     @RequestMapping(method = RequestMethod.GET)

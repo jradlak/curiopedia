@@ -16,12 +16,19 @@ import javax.validation.constraints.NotNull;
 @ToString
 @EqualsAndHashCode
 public class CategoryDTO {
+
+    private Long id;
+
     @NotNull
     private String name;
 
     private String description;
 
-    public CategoryDTO(@JsonProperty("name") String name, @JsonProperty("description") String description) {
+    public CategoryDTO(
+            @JsonProperty("id") Long id,
+            @JsonProperty("name") String name,
+            @JsonProperty("description") String description) {
+        this.id = id;
         this.name = name;
         this.description = description;
     }

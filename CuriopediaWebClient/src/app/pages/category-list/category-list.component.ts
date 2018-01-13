@@ -33,6 +33,16 @@ export class CategoryListComponent implements OnInit {
     this.router.navigate(['/categories/edit']); 
   }
 
+  onEdit(c) {
+    console.log(c);
+    this.router.navigate(['/categories/edit', {id: c.id}]); 
+  }
+
+  onDelete(c) {
+    console.log(c);
+    console.log('TODO: delete!!');
+  }
+
   onPageChanged(page: number) {
     this.router.navigate(['/categories', {page: page}]);
   }

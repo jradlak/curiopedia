@@ -1,10 +1,26 @@
 <h1>Categories</h1>
 
-<ul class="categories list-unstyled">
-  <li *ngFor="let c of categories" class="clearfix" [mptStyles]="[styles.list]">    
-    <a [routerLink]="['/categories', c.name]">{{c.name}}</a>
-  </li>
-</ul>
+<table class="table">
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Operation</th>
+      </tr>
+  </thead>
+  <tr *ngFor="let c of categories" class="clearfix" [mptStyles]="[styles.list]">
+    <td>{{c.name}}</td>
+    <td>{{c.description}}</td>
+    <td>
+      <button type="button" class="btn btn-warning" (click)="onEdit(c)">
+          Edit
+      </button>
+      <button type="button" class="btn btn-danger" (click)="onDelete(c)">
+          Delete
+      </button>
+  </td>
+  </tr>
+</table>
 
 <div class="clearfix">
   <mpt-pager class="float-left"
