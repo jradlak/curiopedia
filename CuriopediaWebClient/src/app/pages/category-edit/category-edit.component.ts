@@ -1,5 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 import values from "lodash/values";
 import {Category} from "../../core/domains";
 import {CategoryService} from "../../core/services/category.service";
@@ -19,12 +20,24 @@ export class CategoryEditComponent implements OnInit {
 
   category: Category;
 
-  constructor(private categoryService: CategoryService,
-              private toastService: ToastService) {
+  constructor(private route: ActivatedRoute, 
+              private categoryService: CategoryService,
+              private toastService: ToastService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
     this.initForm();
+
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.categoryService.get(params['id']).subscribe(c => {          
+          this.category = c;
+          this.editOther = true;
+          this.initForm();
+        });
+      }
+    });
   }
 
   onSubmit(params) {
@@ -35,6 +48,7 @@ export class CategoryEditComponent implements OnInit {
     this.categoryService.create(params)
       .subscribe(() => {          
           this.toastService.success('Successfully created.');
+          this.router.navigate(['/categories']); 
         }, e => this.handleError(e));      
   }
 

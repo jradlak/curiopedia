@@ -22,6 +22,12 @@ export class CategoryService {
       ;
   }
 
+  get(id: string|number): Observable<Category> {    
+    return this.http.get(`${url}/${id}`)
+      .map(res => res.json())
+      ;
+  }
+
   create(params: CategoryParams): Observable<Response> {    
     return this.http.post(url, params);
   }

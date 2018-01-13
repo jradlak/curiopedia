@@ -28,6 +28,10 @@ export class CategoryListComponent implements OnInit {
       this.list(this.page);
     });
   }
+  
+  onAdd() {
+    this.router.navigate(['/categories/edit']); 
+  }
 
   onPageChanged(page: number) {
     this.router.navigate(['/categories', {page: page}]);
