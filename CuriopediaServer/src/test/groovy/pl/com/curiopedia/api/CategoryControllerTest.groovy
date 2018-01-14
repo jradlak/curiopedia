@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.hasSize
 import static org.hamcrest.Matchers.is
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -51,6 +52,37 @@ class CategoryControllerTest extends BaseControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(strdto)
         )
+
+        then:
+        with(response) {
+            andExpect(status().isOk())
+        }
+    }
+
+    def "can update category"() {
+        given:
+        signIn()
+        CategoryDTO dto = CategoryDTO.builder()
+                .name("category1")
+                .description("desc1")
+                .build()
+
+        CategoryDTO dtoMOD = CategoryDTO.builder()
+                .id(1)
+                .name("category1")
+                .description("desc2")
+                .build()
+
+        String strdto = toJson(dto)
+        perform(post("/api/categories")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(strdto))
+
+        when:
+        String strdtoMOD = toJson(dtoMOD)
+        def response = perform(patch("/api/categories/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(strdtoMOD))
 
         then:
         with(response) {

@@ -22,6 +22,9 @@ public class ErrorResponse {
 
     public final static String NO_CATEGORY_MSG = "Category not found";
 
+    public final static String CATEGORY_NAME_ALREADY_EXISTS = "category_name_already_exists";
+
+    public final static String CATEGORY_NAME_ALREADY_EXISTS_MSG = "Category name already exists";
 
     public final static String NO_SOURCE = "no_source";
 
