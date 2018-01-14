@@ -24,12 +24,10 @@ class CategoryServiceTest extends BaseServiceTest {
 
     def "can create category"() {
         given:
-        CategoryDTO categoryDTO = CategoryDTO.builder()
-                .name("category1").description("description1")
-                .build()
+        CategoryDTO categoryDTO = makeCategory()
 
         when:
-        Category category = categoryService.createCategory(categoryDTO)
+        categoryService.createCategory(categoryDTO)
         Optional<Category> categoryDb = categoryRepository.findOneByName("category1")
 
         then:
@@ -37,6 +35,40 @@ class CategoryServiceTest extends BaseServiceTest {
         categoryDb.isPresent()
         categoryDb.get().name == "category1"
         categoryDb.get().description == "description1"
+    }
+
+    def "can update existing category"() {
+        given:
+        CategoryDTO categoryDTO = makeCategory()
+        categoryService.createCategory(categoryDTO)
+        CategoryDTO categoryFromDb = categoryService.findOneByName(categoryDTO.getName()).get()
+
+        when:
+        CategoryDTO modCategory = CategoryDTO.builder()
+            .id(categoryFromDb.getId())
+            .name(categoryFromDb.getName() + "MOD")
+            .description(categoryFromDb.getDescription() + "MOD")
+            .build()
+        Category categoryModded = categoryService.updateCategory(modCategory)
+
+        then:
+        categoryModded.getId() == categoryFromDb.getId()
+        categoryModded.getName().equals(categoryFromDb.getName() + "MOD")
+        categoryModded.getDescription().equals(categoryFromDb.getDescription() + "MOD")
+    }
+
+    def "can find category by id"() {
+        given:
+        CategoryDTO categoryDTO = makeCategory()
+        Category category = categoryService.createCategory(categoryDTO)
+
+        when:
+        Optional<Category> categoryDb = categoryService.findOne(category.getId())
+
+        then:
+        categoryDb.isPresent()
+        categoryDb.get().getName().equals("category1")
+
     }
 
     def "can list all categories"() {
@@ -51,5 +83,13 @@ class CategoryServiceTest extends BaseServiceTest {
         categories.size == 2
         categories.content.first().name == "category1"
         categories.content.last().name == "category2"
+    }
+
+    private CategoryDTO makeCategory() {
+        CategoryDTO categoryDTO = CategoryDTO.builder()
+                .name("category1").description("description1")
+                .build()
+
+        return categoryDTO
     }
 }

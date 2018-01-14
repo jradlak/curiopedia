@@ -1,10 +1,7 @@
 package pl.com.curiopedia.domain.curio.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Value;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
