@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import pl.com.curiopedia.domain.curio.dto.CategoryDTO
 import pl.com.curiopedia.domain.curio.entity.Category
+import pl.com.curiopedia.domain.curio.exceptions.CategoryNameAlreadyExists
 import pl.com.curiopedia.domain.curio.repository.CategoryRepository
 import pl.com.curiopedia.domain.user.service.BaseServiceTest
 
@@ -24,7 +25,7 @@ class CategoryServiceTest extends BaseServiceTest {
 
     def "can create category"() {
         given:
-        CategoryDTO categoryDTO = makeCategory()
+        CategoryDTO categoryDTO = makeCategory("category1")
 
         when:
         categoryService.createCategory(categoryDTO)
@@ -39,7 +40,7 @@ class CategoryServiceTest extends BaseServiceTest {
 
     def "can update existing category"() {
         given:
-        CategoryDTO categoryDTO = makeCategory()
+        CategoryDTO categoryDTO = makeCategory("category1")
         categoryService.createCategory(categoryDTO)
         CategoryDTO categoryFromDb = categoryService.findOneByName(categoryDTO.getName()).get()
 
@@ -57,9 +58,31 @@ class CategoryServiceTest extends BaseServiceTest {
         categoryModded.getDescription().equals(categoryFromDb.getDescription() + "MOD")
     }
 
+    def "can not update category when name exists"() {
+        given:
+        CategoryDTO categoryDTO = makeCategory("name1")
+        CategoryDTO categoryDTO2 = makeCategory("name2")
+        categoryService.createCategory(categoryDTO)
+        categoryService.createCategory(categoryDTO2)
+
+        CategoryDTO categoryFromDb = categoryService.findOneByName(categoryDTO.getName()).get()
+
+        when:
+        CategoryDTO modCategory = CategoryDTO.builder()
+                .id(categoryFromDb.getId())
+                .name("name2")
+                .description(categoryFromDb.getDescription() + "MOD")
+                .build()
+
+        categoryService.updateCategory(modCategory)
+
+        then:
+        thrown CategoryNameAlreadyExists
+    }
+
     def "can find category by id"() {
         given:
-        CategoryDTO categoryDTO = makeCategory()
+        CategoryDTO categoryDTO = makeCategory("category1")
         Category category = categoryService.createCategory(categoryDTO)
 
         when:
@@ -68,7 +91,6 @@ class CategoryServiceTest extends BaseServiceTest {
         then:
         categoryDb.isPresent()
         categoryDb.get().getName().equals("category1")
-
     }
 
     def "can list all categories"() {
@@ -85,9 +107,9 @@ class CategoryServiceTest extends BaseServiceTest {
         categories.content.last().name == "category2"
     }
 
-    private CategoryDTO makeCategory() {
+    private CategoryDTO makeCategory(String name) {
         CategoryDTO categoryDTO = CategoryDTO.builder()
-                .name("category1").description("description1")
+                .name(name).description("description1")
                 .build()
 
         return categoryDTO
