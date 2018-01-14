@@ -27,18 +27,19 @@ export class CategoryEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.category = <Category>{};
+    this.initForm();
+
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.categoryService.get(params['id']).subscribe(c => {          
           this.category = c;
           this.editOther = true;
           console.log(this.category);
-          this.initForm();
+          this.loadCategoryControlsData();
         });
       } else {
-        this.category.name = '';
-        this.category.description = '';
-        this.initForm();
+        this.loadCategoryControlsData();
       }
     });
   }
@@ -56,16 +57,14 @@ export class CategoryEditComponent implements OnInit {
   }
 
   private initForm() {    
-    this.name = new FormControl('', Validators.compose([
+    this.name = new FormControl(this.category.name, Validators.compose([
       Validators.required,
       Validators.minLength(4),
     ]));
-    this.description = new FormControl('', Validators.compose([
+    this.description = new FormControl(this.category.description, Validators.compose([
       Validators.required,      
     ]));
     
-    //this.name.setValue(this.category.name);
-    //this.description.setValue(this.category.description);
     this.categoryForm = new FormGroup({
       name: this.name,
       description: this.description,      
@@ -74,5 +73,10 @@ export class CategoryEditComponent implements OnInit {
 
   private handleError(error) {    
     this.toastService.error("Something go wrong, message = " + error.message);   
+  }
+
+  private loadCategoryControlsData() {
+    this.name.setValue(this.category.name);
+    this.description.setValue(this.category.description);
   }
 }  
