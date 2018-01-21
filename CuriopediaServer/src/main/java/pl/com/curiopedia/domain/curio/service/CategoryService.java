@@ -17,6 +17,8 @@ public interface CategoryService {
 
     Category updateCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException, CategoryNameAlreadyExists;
 
+    void deleteCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException;
+
     Page<CategoryDTO> findAll(PageRequest pageable);
 
     Optional<CategoryDTO> findOne(Long id);

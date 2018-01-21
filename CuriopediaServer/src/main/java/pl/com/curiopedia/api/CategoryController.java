@@ -48,6 +48,10 @@ public class CategoryController {
         categoryService.updateCategory(categoryDTO);
     }
 
+    public void delete(@Valid @RequestBody CategoryDTO categoryDTO) throws CategoryNotFoundException {
+
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public Page<CategoryDTO> list(@RequestParam(value = "page", required = false) @Nullable Integer page,
                                   @RequestParam(value = "size", required = false) @Nullable Integer size) {

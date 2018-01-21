@@ -40,12 +40,17 @@ public class CategoryServiceImpl implements CategoryService {
             throw new CategoryNameAlreadyExists("Category of name " + categoryDTO.getName() + " already exists!");
         }
 
-        Category categoryToUpdate = this.categoryRepository.findOneById(categoryDTO.getId())
-                .orElseThrow(CategoryNotFoundException::new);
+        Category categoryToUpdate = this.findStoredCategory(categoryDTO);
 
         categoryToUpdate.setName(categoryDTO.getName());
         categoryToUpdate.setDescription(categoryDTO.getDescription());
         return categoryRepository.save(categoryToUpdate);
+    }
+
+    @Override
+    public void deleteCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException {
+        Category categoryToDelete = this.findStoredCategory(categoryDTO);
+        categoryRepository.delete(categoryToDelete);
     }
 
     @Override
@@ -75,5 +80,10 @@ public class CategoryServiceImpl implements CategoryService {
     private boolean categoryNameExists(CategoryDTO categoryDTO) {
         Optional<Category> existingCategory = categoryRepository.findOneByName(categoryDTO.getName());
         return existingCategory.isPresent() && existingCategory.get().getId() != categoryDTO.getId();
+    }
+
+    private Category findStoredCategory(CategoryDTO categoryDTO) throws CategoryNotFoundException {
+        return this.categoryRepository.findOneById(categoryDTO.getId())
+                .orElseThrow(CategoryNotFoundException::new);
     }
 }

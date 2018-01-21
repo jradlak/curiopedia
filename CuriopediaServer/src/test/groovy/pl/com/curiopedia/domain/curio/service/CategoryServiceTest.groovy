@@ -80,6 +80,20 @@ class CategoryServiceTest extends BaseServiceTest {
         thrown CategoryNameAlreadyExists
     }
 
+    def "can delete existing category"() {
+        given:
+        CategoryDTO categoryDTO = makeCategory("category1")
+        categoryService.createCategory(categoryDTO)
+        CategoryDTO categoryFromDb = categoryService.findOneByName(categoryDTO.getName()).get()
+        long categoriesCount = categoryRepository.count()
+
+        when:
+        categoryService.deleteCategory(categoryFromDb)
+
+        then:
+        categoriesCount == categoryRepository.count() + 1
+    }
+
     def "can find category by id"() {
         given:
         CategoryDTO categoryDTO = makeCategory("category1")
