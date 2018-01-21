@@ -13,6 +13,7 @@ import {ToastService} from "../../components/toast/toast.service";
 export class CategoryEditComponent implements OnInit {
 
   categoryForm: FormGroup;
+  id: FormControl;
   name: FormControl;
   description: FormControl
 
@@ -40,6 +41,7 @@ export class CategoryEditComponent implements OnInit {
         });
       } else {
         this.loadCategoryControlsData();
+        this.editOther = false;
       }
     });
   }
@@ -49,6 +51,14 @@ export class CategoryEditComponent implements OnInit {
 
     if (!this.categoryForm.valid) return;
 
+    if (this.editOther) {
+      this.editCategory(params);
+    } else {
+      this.createCategory(params);
+    }
+  }
+
+  private createCategory(params) {
     this.categoryService.create(params)
       .subscribe(() => {          
           this.toastService.success('Successfully created.');
@@ -56,7 +66,17 @@ export class CategoryEditComponent implements OnInit {
         }, e => this.handleError(e));      
   }
 
-  private initForm() {    
+  private editCategory(params) {
+    this.categoryService.update(params)
+      .subscribe(() => {          
+          this.toastService.success('Successfully updated.');
+          this.router.navigate(['/categories']); 
+        }, e => this.handleError(e));      
+  }
+
+  private initForm() {   
+    this.id = new FormControl(this.category.id);
+
     this.name = new FormControl(this.category.name, Validators.compose([
       Validators.required,
       Validators.minLength(4),
@@ -66,6 +86,7 @@ export class CategoryEditComponent implements OnInit {
     ]));
     
     this.categoryForm = new FormGroup({
+      id: this.id,
       name: this.name,
       description: this.description,      
     });
@@ -76,6 +97,7 @@ export class CategoryEditComponent implements OnInit {
   }
 
   private loadCategoryControlsData() {
+    this.id.setValue(this.category.id);
     this.name.setValue(this.category.name);
     this.description.setValue(this.category.description);
   }

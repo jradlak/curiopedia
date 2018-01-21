@@ -27,12 +27,13 @@ describe('CategoryEditComponent', () => {
   let router: Router;
   let backend: MockBackend;
 
-/*
+  /*
   const category: Category = {    
+    id: 0,
     name: "Category1",
     description: "Category1 description"    
   };
-*/
+  */
 
   beforeEach(() => {
     TestBed.configureTestingModule({

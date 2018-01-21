@@ -8,6 +8,8 @@ import {Category} from "../domains";
 import {JsonHttp} from "./";
 
 const url = '/api/categories';
+const urlUpdate = url + "/update";
+
 const defaultPageRequest: PageRequest = {page: 1, size: 5};
 
 @Injectable()
@@ -30,5 +32,9 @@ export class CategoryService {
 
   create(params: CategoryParams): Observable<Response> {    
     return this.http.post(url, params);
+  }
+
+  update(params: CategoryParams): Observable<Response> {
+    return this.http.patch(urlUpdate, params);
   }
 }
