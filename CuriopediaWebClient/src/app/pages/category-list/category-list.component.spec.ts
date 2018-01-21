@@ -89,12 +89,9 @@ describe('CategoryListComponent', () => {
     expect(page.totalPages).toEqual(1);
 
     const el = cmpDebugElement.nativeElement;
-    expect(getDOM().querySelectorAll(el, 'li>a')[0].innerText).toEqual('test1');
-    expect(getDOM().querySelectorAll(el, 'li>a')[1].innerText).toEqual('test2');
-
-    const categoryShowLink = getDOM().querySelector(el, 'li > a[href="/categories/test1"]');
-    expect(categoryShowLink).toBeTruthy();
-
+    expect(getDOM().querySelectorAll(el, 'td')[0].innerText).toEqual('test1');
+    expect(getDOM().querySelectorAll(el, 'td')[3].innerText).toEqual('test2');
+    
     const pager: PagerComponent = pagerDebugElement.componentInstance;
     expect(pager.totalPages).toEqual(1);
   });
