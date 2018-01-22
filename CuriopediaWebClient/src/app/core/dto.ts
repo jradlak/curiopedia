@@ -18,6 +18,7 @@ export interface UserParams {
 }
 
 export interface CategoryParams {
+  id:string|number;
   name:string;
   description?:string;
 }

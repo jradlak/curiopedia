@@ -15,7 +15,7 @@
       <button type="button" class="btn btn-warning" (click)="onEdit(c)">
           Edit
       </button>
-      <button type="button" class="btn btn-danger" (click)="onDelete(c)">
+      <button type="button" class="btn btn-danger" (click)="modalConfirm.show(c, c.name, 'delete')">
           Delete
       </button>
   </td>
@@ -32,3 +32,17 @@
 <button type="button" class="btn btn-warning" (click)="onAdd()">
   Add+
 </button>
+
+
+<app-modal #modalConfirm>
+    <div class="app-modal-header">
+      Confirmation question.
+    </div>
+    <div class="app-modal-body">
+      Please confirm, that you want to delete category: <b>{{modalConfirm.message}}</b>
+    </div>
+    <div class="app-modal-footer">      
+      <button type="button" class="btn btn-primary" (click)="modalConfirm.reject()">Reject</button>
+      <button type="button" class="btn btn-danger" (click)="modalConfirm.confirm()">Confirm</button>                              
+    </div>
+  </app-modal>

@@ -37,4 +37,8 @@ export class CategoryService {
   update(params: CategoryParams): Observable<Response> {
     return this.http.patch(urlUpdate, params);
   }
+
+  delete(params: CategoryParams): Observable<Response> {
+    return this.http.patch(urlUpdate, params);
+  }
 }

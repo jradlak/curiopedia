@@ -61,6 +61,7 @@ describe('CategoryService', () => {
   describe('.create', () => {
     it("create category", (done) => {
       const params:  CategoryParams = {
+        id: 0,
         name: 'cat3',
         description: 'desc3'
       };

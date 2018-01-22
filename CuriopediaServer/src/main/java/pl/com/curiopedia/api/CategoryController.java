@@ -48,8 +48,9 @@ public class CategoryController {
         categoryService.updateCategory(categoryDTO);
     }
 
+    @RequestMapping(method = RequestMethod.PATCH, path = "/delete")
     public void delete(@Valid @RequestBody CategoryDTO categoryDTO) throws CategoryNotFoundException {
-
+        categoryService.deleteCategory(categoryDTO);
     }
 
     @RequestMapping(method = RequestMethod.GET)

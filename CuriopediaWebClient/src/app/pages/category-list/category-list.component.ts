@@ -5,6 +5,12 @@ import {CategoryService} from "../../core/services/category.service";
 import {HttpErrorHandler} from "../../core/services/http-error-handler";
 import {styles} from './category-list.component.styles';
 
+import {ModalService, DidConfirm, DidReject} from "../../components-shared/modal/modal.service";
+import isEmpty from "lodash/isEmpty";
+import omitBy from "lodash/omitBy";
+
+import {ToastService} from "../../components/toast/toast.service";
+
 @Component({
   selector: 'mpt-category-list',
   templateUrl: 'category-list.component.html',
@@ -17,8 +23,10 @@ export class CategoryListComponent implements OnInit {
   page: number;
 
   constructor(private categoryService: CategoryService,
+              private modalService: ModalService,
               private errorHandler: HttpErrorHandler,
               private route: ActivatedRoute,
+              private toastService: ToastService,
               private router: Router) {
   }
 
@@ -26,6 +34,14 @@ export class CategoryListComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.page = +(params['page'] || 1);
       this.list(this.page);
+    });
+
+    this.modalService.events.subscribe((event) => {
+      if (event instanceof DidConfirm) {
+        this.onConfirm(event);
+      } else if (event instanceof DidReject) {
+        this.onReject(event);
+      }
     });
   }
   
@@ -38,9 +54,16 @@ export class CategoryListComponent implements OnInit {
     this.router.navigate(['/categories/edit', {id: c.id}]); 
   }
 
-  onDelete(c) {
-    console.log(c);
-    console.log('TODO: delete!!');
+  onConfirm(confirm: DidConfirm) {
+    console.log(confirm);
+    if (confirm.lbl === 'delete') {
+      this.deleteCategory(confirm.val);    
+    }
+  }
+
+  onReject(reject: DidReject) {
+    console.log(reject);
+    this.list(this.page);
   }
 
   onPageChanged(page: number) {
@@ -56,4 +79,15 @@ export class CategoryListComponent implements OnInit {
     ;
   }
 
+  private deleteCategory(cat) {
+    this.categoryService.delete(omitBy({
+      id: cat.id,
+      name: cat.name,
+      description: cat.description
+    }, isEmpty)).subscribe(() => {
+      console.log('Successfully deleted.');
+      this.toastService.success('Successfully deleted.');
+      this.list(this.page);
+    }, e => console.log(e));
+  }
 }
